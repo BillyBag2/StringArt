@@ -24,7 +24,7 @@ jobs:
       run: mkdir build
 
     - name: Configure with CMake
-      run: cmake -S source -B build
+      run: cmake -DCMAKE_BUILD_TYPE=Release -S source -B build
 
     - name: Build with CMake
       run: cmake --build build

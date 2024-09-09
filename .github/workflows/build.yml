@@ -1,0 +1,40 @@
+name: CMake Build
+
+on:
+  # Trigger the workflow on push or pull request
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu Linux runner
+
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v4
+
+    - name: Set up CMake
+      uses: jwlawson/actions-setup-cmake@v2
+
+    - name: Create build directory
+      run: mkdir build
+
+    - name: Configure with CMake
+      run: cmake -S source -B build
+
+    - name: Build with CMake
+      run: cmake --build build
+
+#    - name: Run tests (optional)
+#      run: cd build && ctest
+#     if: success()
+
+    - name: Upload executables as artifacts
+      uses: actions/upload-artifact@v4
+      with:
+       name: Artifacts
+       path: build/bin  # This is where your executables are placed
